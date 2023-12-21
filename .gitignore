@@ -1,0 +1,5 @@
+amr_wind
+core.*
+*.o*
+out.log
+nrel5mw.ech
