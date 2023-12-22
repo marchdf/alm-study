@@ -39,17 +39,17 @@ def main():
     qoi_ls = [
         rd.QoiClass(
             index="Vx",
-            label="Non-dimensional axial velocity " + r"$U_x [-]$",
+            label=r"$U_x [-]$",
             scale=1 / 8,
         ),
         #    rd.QoiClass(index='Vy',  label='Non-dimensional axial velocity ' + r'$U_x [-]$',),
-        rd.QoiClass(index="Fl", label=r"$L_*$", scale=1 / fs),
-        rd.QoiClass(index="Fd", label=r"$D_*$", scale=1 / fs),
+        rd.QoiClass(index="Fl", label=r"$L [-]$", scale=1 / fs),
+        rd.QoiClass(index="Fd", label=r"$D [-]$", scale=1 / fs),
         #    rd.QoiClass(index='Fy',  label='Force y$'),
         #    rd.QoiClass(index='Phi',  label='Flow angle ' + r'$\phi [-]$'),
         #    rd.QoiClass(index='lift',  label='lift'),
         #    rd.QoiClass(index='drag',  label='drag'),
-        rd.QoiClass(index="Alpha", label="AoA"),
+        rd.QoiClass(index="Alpha", label=r"$\alpha [^\circ]$"),
     ]
 
     # The location of all cases
@@ -92,7 +92,7 @@ def main():
 
             for k, v in refnames.items():
                 x, y = np.loadtxt(refdir / f"{k}_Data_{refmap[qoi.index]}", unpack=True)
-                plt.plot(x, y, "o-", label=v["label"])
+                plt.plot(x, y, ls="-", marker=next(markers), label=v["label"])
 
             # rd.draw_blade("/home/lmartine/blade/blade_nrel5mw.png")
 
