@@ -10,7 +10,7 @@
 module purge
 module load mpt
 export SPACK_MANAGER=${HOME}/exawind/spack-manager
-source ${SPACK_MANAGER}/start.sh && quick-activate ${SPACK_MANAGER}/environments/amr-wind-dev
+source ${SPACK_MANAGER}/start.sh && quick-activate ${SPACK_MANAGER}/environments/amr-wind-alm
 spack load amr-wind
 
 ranks_per_node=36
