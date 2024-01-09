@@ -3,6 +3,11 @@ core.*
 *.o*
 out.log
 nrel5mw.ech
+nrel5mw.sum
+nrel5mw.AD.sum
+nrel5mw.ED.sum
+fast_velocity_data
+post_processing
 __pycache__
 poetry.lock
 .python-version

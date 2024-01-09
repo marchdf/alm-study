@@ -10,11 +10,11 @@ io.outputs = actuator_src_term
 time.plot_interval            =  50       # Steps between plot files
 time.checkpoint_interval      =  -1       # Steps between checkpoint files
 
-ConstValue.density.value = 1.0
+ConstValue.density.value = 1.225
 ConstValue.velocity.value = 8.0 0.0 0.0
 
 incflo.use_godunov = 1
-incflo.godunov_type = "wenoz"
+incflo.godunov_type = "weno_z"
 incflo.do_initial_proj = 1
 incflo.initial_iterations = 3
 transport.viscosity = 1.0e-5
@@ -82,7 +82,7 @@ tagging.refine0.c1.outer_radius = 157.5
 
 # Boundary conditions
 xlo.type = "mass_inflow"
-xlo.density = 1.0
+xlo.density = 1.225
 xlo.velocity = 8.0 0.0 0.0
 xhi.type = "pressure_outflow"
 ylo.type =   "slip_wall"
