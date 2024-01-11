@@ -60,11 +60,8 @@ class CaseClass:
         fname="nrel5mw.T1.out",
         nb=3,
         label="case",
-        qoi_ls=None,
+        qois=None,
         times=None,
-        color="blue",
-        ls="-",
-        marker=None,
         r0=1.5 / 63,
         r1=1,
     ):
@@ -79,15 +76,10 @@ class CaseClass:
         self.label = label
 
         # The list of quantities of interest
-        self.qoi_ls = qoi_ls if qoi_ls is not None else []
+        self.qois = qois if qois is not None else []
 
         # The time to average the blade loads
-        self.times = times if times is not None else [0, 100]
-
-        # The plot parameters
-        self.color = color
-        self.ls = ls
-        self.marker = marker
+        self.times = times if times is not None else [0, 9999]
 
         #  Load the data as a pandas array
         self.df = pd.read_csv(
@@ -95,10 +87,9 @@ class CaseClass:
             skiprows=[0, 1, 2, 3, 4, 5, 7],
             delim_whitespace=True,
             index_col=[0],
-            error_bad_lines=False,
+            on_bad_lines="skip",
             # usecols=lambda x: 'B1N' in x,
         )
-        # ~ for i in self.df.columns: print(i)
 
         # A list of all the nodes with Cl coefficient
         ls = [i for i in list(self.df.columns) if (("B1N" in i) & ("Phi" in i))]
@@ -112,15 +103,13 @@ class CaseClass:
         self.qoi = [{} for n in range(self.nb)]
 
         # Extract all the quantities of interest
-        self.extract_qoi(t=self.times)
+        self.extract_qoi()
 
-    def extract_qoi(self, times=None):
+    def extract_qoi(self):
         """Extract the data along the blade and average t -  the times to average."""
-        if times is None:
-            times = [0, 9999]
         for nb in range(self.nb):
             # Loop through all the quantities of interest and average
-            for qoi in self.qoi_ls:
+            for qoi in self.qois:
 
                 # The list of all columns witht he given qoi
                 ls = [
@@ -130,7 +119,9 @@ class CaseClass:
                 ]
 
                 # The index to identify time range
-                index = (self.df.index >= times[0]) & (self.df.index <= times[1])
+                index = (self.df.index >= self.times[0]) & (
+                    self.df.index <= self.times[1]
+                )
 
                 # Take the mean of the given columns
                 self.qoi[nb][qoi.index] = self.df[index][ls].mean() * qoi.scale

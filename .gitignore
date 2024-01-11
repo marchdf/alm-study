@@ -2,6 +2,7 @@ amr_wind
 core.*
 *.o*
 out.log
+plt*
 nrel5mw.ech
 nrel5mw.sum
 nrel5mw.AD.sum

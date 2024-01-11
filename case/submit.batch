@@ -4,13 +4,17 @@
 #SBATCH --account=hfm
 #SBATCH --nodes=114
 #SBATCH --time=15:15:00
+##SBATCH --nodes=1
+##SBATCH --time=0:10:00
+##SBATCH --partition=debug
 #SBATCH -o %x.o%j
 #SBATCH --switches=2
 
 module purge
 module load mpt
 export SPACK_MANAGER=${HOME}/exawind/spack-manager
-source ${SPACK_MANAGER}/start.sh && quick-activate ${SPACK_MANAGER}/environments/amr-wind-alm
+# env from: quick-create-dev -n amr-wind-alm-34 -s openfast@3.4.1 amr-wind@main+openfast
+source ${SPACK_MANAGER}/start.sh && quick-activate ${SPACK_MANAGER}/environments/amr-wind-alm-34
 spack load amr-wind
 
 ranks_per_node=36
@@ -29,4 +33,4 @@ echo "Working dir    = $PWD"
 
 cp ${aw_exec} $(pwd)/amr_wind
 
-srun -n ${mpi_ranks} -c 1 --cpu_bind=cores $(pwd)/amr_wind alm.yaml  > out.log 2>&1
+srun -n ${mpi_ranks} -c 1 --cpu_bind=cores $(pwd)/amr_wind alm.inp > out.log 2>&1

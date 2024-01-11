@@ -28,6 +28,9 @@ def main():
     parser.add_argument(
         "-f", "--fdir", help="Folder with amr-wind data files", required=True, type=str
     )
+    parser.add_argument(
+        "-d", "--draw_blade", help="Draw the turbine blade", action="store_true"
+    )
     args = parser.parse_args()
 
     uref = 8
@@ -36,7 +39,7 @@ def main():
     fs = dref * 1.23 * uref**2
 
     # The quantities of interest
-    qoi_ls = [
+    qois = [
         rd.QoiClass(
             index="Vx",
             label=r"$U_x [-]$",
@@ -54,19 +57,19 @@ def main():
 
     # The location of all cases
     fdir = pathlib.Path(args.fdir)
-    fname = fdir / "fast_inp" / "/nrel5mw.out"
+    fname = fdir / "fast_inp" / "nrel5mw.out"
 
-    # # The list of all the cases
-    # times = [500, 1300]
-    # case = rd.CaseClass(
-    #     fname=fname,
-    #     label="amr-wind",
-    #     qoi_ls=qoi_ls,
-    #     times=times,
-    #     marker="o",
-    # )
+    # The list of all the cases
+    times = [400, 1300]
+    case_label = "AMR-Wind"
+    case = rd.CaseClass(
+        fname=fname,
+        label=case_label,
+        qois=qois,
+        times=times,
+    )
 
-    refdir = base_dir / "refdata"
+    ref_dir = base_dir / "refdata"
     refnames = {
         "JHU": {"label": "Johns Hopkins Code"},
         "KUL": {"label": "KU Leuven Code"},
@@ -77,24 +80,25 @@ def main():
     # Loop and plot all the qoi along the blade
     fname = "plots.pdf"
     with PdfPages(fname) as pdf:
-        for qoi in qoi_ls:
+        blade_num = 0
+        for qoi in qois:
             plt.figure(qoi.index)
-            # plt.plot(
-            #     case.r,
-            #     case.qoi[i][qoi.index],
-            #     marker=case.marker,
-            #     # markevery=4,
-            #     ms=6,
-            #     ls=case.ls,
-            #     # color=case.color,
-            #     label="AMR-Wind",
-            # )
+            plt.plot(
+                case.r,
+                case.qoi[blade_num][qoi.index],
+                ls="-",
+                marker=next(markers),
+                label=case.label,
+            )
 
             for k, v in refnames.items():
-                x, y = np.loadtxt(refdir / f"{k}_Data_{refmap[qoi.index]}", unpack=True)
+                x, y = np.loadtxt(
+                    ref_dir / f"{k}_Data_{refmap[qoi.index]}", unpack=True
+                )
                 plt.plot(x, y, ls="-", marker=next(markers), label=v["label"])
 
-            # rd.draw_blade("/home/lmartine/blade/blade_nrel5mw.png")
+            if args.draw_blade:
+                rd.draw_blade(ref_dir / "blade_nrel5mw.png")
 
             plt.xlabel(r"$r[-]$")
             plt.ylabel(qoi.label)
