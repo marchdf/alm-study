@@ -39,19 +39,20 @@ def main():
     fs = dref * 1.23 * uref**2
 
     # The quantities of interest
+    # others:
+    # rd.QoiClass(index='Vy', label='Non-dimensional axial velocity ' + r'$U_x [-]$',),
+    # rd.QoiClass(index='Fy', label='Force y$'),
+    # rd.QoiClass(index='Phi', label='Flow angle ' + r'$\phi [-]$'),
+    # rd.QoiClass(index='lift', label='lift'),
+    # rd.QoiClass(index='drag', label='drag'),
     qois = [
         rd.QoiClass(
             index="Vx",
             label=r"$U_x [-]$",
             scale=1 / 8,
         ),
-        #    rd.QoiClass(index='Vy',  label='Non-dimensional axial velocity ' + r'$U_x [-]$',),
         rd.QoiClass(index="Fl", label=r"$L [-]$", scale=1 / fs),
         rd.QoiClass(index="Fd", label=r"$D [-]$", scale=1 / fs),
-        #    rd.QoiClass(index='Fy',  label='Force y$'),
-        #    rd.QoiClass(index='Phi',  label='Flow angle ' + r'$\phi [-]$'),
-        #    rd.QoiClass(index='lift',  label='lift'),
-        #    rd.QoiClass(index='drag',  label='drag'),
         rd.QoiClass(index="Alpha", label=r"$\alpha [^\circ]$"),
     ]
 

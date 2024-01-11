@@ -110,7 +110,6 @@ class CaseClass:
         for nb in range(self.nb):
             # Loop through all the quantities of interest and average
             for qoi in self.qois:
-
                 # The list of all columns witht he given qoi
                 ls = [
                     i
@@ -131,7 +130,7 @@ class QoiClass:
     """A class that contains all the information for the quantities of interest."""
 
     def __init__(self, index="Ft", label=r"$Ft$", scale=1.0):
-
+        """Initialize."""
         # The index used int he openfast file
         self.index = index
 
