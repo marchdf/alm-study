@@ -82,8 +82,8 @@ def main():
 
     ref_dir = base_dir / "refdata"
     refnames = {
-        "JHU": {"label": "Johns Hopkins Code"},
-        "KUL": {"label": "KU Leuven Code"},
+        "JHU": {"label": "LESGO"},
+        "KUL": {"label": "SP-Wind"},
         "NREL": {"label": "SOWFA"},
     }
     refmap = {"Vx": "Vaxial", "Alpha": "alpha", "Fl": "lift", "Fd": "drag"}
