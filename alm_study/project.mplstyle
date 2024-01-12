@@ -11,7 +11,7 @@ lines.markersize:      6           # marker size, in points
 legend.loc:           best
 
 # Set default font size, everything scales with this
-font.size:    22.0
+font.size:    20.0
 
 # Relative font sizing for various things (axes, ticks, legend and titles)
 axes.titlesize:     medium   # font size of the axes title
@@ -27,7 +27,7 @@ text.usetex: True  # use latex for all text handling
 mathtext.fontset: cm  # change from 'dejavusans' (default)
 
 # Set a default group for line colors and dash styles
-axes.prop_cycle: cycler('color', [ "#EE2E2F", "#008C48", "#185AA9", "#F47D23", "#662C91", "#A21D21", "#B43894", "#010202"]) + cycler('linestyle',  [ [], [10, 5], [10, 4, 3, 4], [3, 3], [10, 4, 3, 4, 3, 4], [3, 2,6,2], [3,4,1,4], [1,1] ])
+axes.prop_cycle: cycler('color', [ "#EE2E2F", "#185AA9", "#008C48", "#F47D23", "#662C91", "#A21D21", "#B43894", "#010202"]) + cycler('linestyle',  [ [], [10, 5], [10, 4, 3, 4], [3, 3], [10, 4, 3, 4, 3, 4], [3, 2,6,2], [3,4,1,4], [1,1] ])
 
 # Some explicit figure details
 figure.dpi:         300       # figure dots per inch

@@ -22,6 +22,16 @@ linestyles = prop_cycle.by_key()["linestyle"]
 markers = itertools.cycle(("s", "d", "o", "p", "h"))
 
 
+def export_plot_data(p, fname, xlabel="x", ylabel="y"):
+    """Export plot data."""
+    np.savetxt(
+        fname,
+        np.vstack((p.get_xdata(), p.get_ydata())).T,
+        header=f"{xlabel} {ylabel}",
+        comments="",
+    )
+
+
 def main():
     """Plot data."""
     parser = argparse.ArgumentParser(description="A simple plot tool")
@@ -48,11 +58,11 @@ def main():
     qois = [
         rd.QoiClass(
             index="Vx",
-            label=r"$U_x [-]$",
+            label=r"$U_x (-)$",
             scale=1 / 8,
         ),
-        rd.QoiClass(index="Fl", label=r"$L [-]$", scale=1 / fs),
-        rd.QoiClass(index="Fd", label=r"$D [-]$", scale=1 / fs),
+        rd.QoiClass(index="Fl", label=r"$L (-)$", scale=1 / fs),
+        rd.QoiClass(index="Fd", label=r"$D (-)$", scale=1 / fs),
         rd.QoiClass(index="Alpha", label=r"$\alpha [^\circ]$"),
     ]
 
@@ -61,7 +71,7 @@ def main():
     fname = fdir / "fast_inp" / "nrel5mw.out"
 
     # The list of all the cases
-    times = [400, 1300]
+    times = [500, 1300]
     case_label = "AMR-Wind"
     case = rd.CaseClass(
         fname=fname,
@@ -80,28 +90,33 @@ def main():
 
     # Loop and plot all the qoi along the blade
     fname = "plots.pdf"
+    edir = base_dir / "plot_data"
     with PdfPages(fname) as pdf:
         blade_num = 0
         for qoi in qois:
             plt.figure(qoi.index)
-            plt.plot(
+            (p,) = plt.plot(
                 case.r,
                 case.qoi[blade_num][qoi.index],
                 ls="-",
                 marker=next(markers),
                 label=case.label,
             )
+            export_plot_data(p, edir / f"amr_wind_{qoi.index}.txt", ylabel=qoi.index)
 
             for k, v in refnames.items():
                 x, y = np.loadtxt(
                     ref_dir / f"{k}_Data_{refmap[qoi.index]}", unpack=True
                 )
-                plt.plot(x, y, ls="-", marker=next(markers), label=v["label"])
+                (p,) = plt.plot(
+                    x, y, ls="-", marker=next(markers), label=v["label"], zorder=2
+                )
+                export_plot_data(p, edir / f"{k}_{qoi.index}.txt", ylabel=qoi.index)
 
             if args.draw_blade:
                 rd.draw_blade(ref_dir / "blade_nrel5mw.png")
 
-            plt.xlabel(r"$r[-]$")
+            plt.xlabel(r"$r(-)$")
             plt.ylabel(qoi.label)
             plt.gca().legend()
             pdf.savefig()
