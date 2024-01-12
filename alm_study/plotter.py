@@ -101,6 +101,7 @@ def main():
                 ls="-",
                 marker=next(markers),
                 label=case.label,
+                zorder=1,
             )
             export_plot_data(p, edir / f"amr_wind_{qoi.index}.txt", ylabel=qoi.index)
 
@@ -109,7 +110,7 @@ def main():
                     ref_dir / f"{k}_Data_{refmap[qoi.index]}", unpack=True
                 )
                 (p,) = plt.plot(
-                    x, y, ls="-", marker=next(markers), label=v["label"], zorder=2
+                    x, y, ls="-", marker=next(markers), label=v["label"], zorder=0
                 )
                 export_plot_data(p, edir / f"{k}_{qoi.index}.txt", ylabel=qoi.index)
 
