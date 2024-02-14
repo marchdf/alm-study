@@ -98,8 +98,6 @@ def main():
             (p,) = plt.plot(
                 case.r,
                 case.qoi[blade_num][qoi.index],
-                ls="-",
-                marker=next(markers),
                 label=case.label,
                 zorder=1,
             )
@@ -109,9 +107,7 @@ def main():
                 x, y = np.loadtxt(
                     ref_dir / f"{k}_Data_{refmap[qoi.index]}", unpack=True
                 )
-                (p,) = plt.plot(
-                    x, y, ls="-", marker=next(markers), label=v["label"], zorder=0
-                )
+                (p,) = plt.plot(x, y, label=v["label"], zorder=0)
                 export_plot_data(p, edir / f"{k}_{qoi.index}.txt", ylabel=qoi.index)
 
             if args.draw_blade:
