@@ -25,6 +25,7 @@ figure.labelsize:   large   # size of the figure label (``Figure.sup[x|y]label()
 # Use latex for rendering, set font to computer modern
 text.usetex: True  # use latex for all text handling
 mathtext.fontset: cm  # change from 'dejavusans' (default)
+font.family: cm #Make the default font consistent
 
 # Set a default group for line colors and dash styles
 axes.prop_cycle: cycler('color', [ "#EE2E2F", "#185AA9", "#008C48", "#F47D23", "#662C91", "#A21D21", "#B43894", "#010202"]) + cycler('linestyle',  [ [], [10, 5], [10, 4, 3, 4], [3, 3], [10, 4, 3, 4, 3, 4], [3, 2,6,2], [3,4,1,4], [1,1] ])
