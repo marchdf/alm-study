@@ -58,11 +58,11 @@ def main():
     qois = [
         rd.QoiClass(
             index="Vx",
-            label=r"$U_x (-)$",
+            label=r"$u / u_0$",
             scale=1 / 8,
         ),
-        rd.QoiClass(index="Fl", label=r"$L (-)$", scale=1 / fs),
-        rd.QoiClass(index="Fd", label=r"$D (-)$", scale=1 / fs),
+        rd.QoiClass(index="Fl", label=r"$F_l$", scale=1 / fs),
+        rd.QoiClass(index="Fd", label=r"$F_d$", scale=1 / fs),
         rd.QoiClass(index="Alpha", label=r"$\alpha [^\circ]$"),
     ]
 
@@ -113,7 +113,7 @@ def main():
             if args.draw_blade:
                 rd.draw_blade(ref_dir / "blade_nrel5mw.png")
 
-            plt.xlabel(r"$r(-)$")
+            plt.xlabel(r"$r / r_0$")
             plt.ylabel(qoi.label)
             plt.gca().legend()
             pdf.savefig()
