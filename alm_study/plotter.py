@@ -115,6 +115,7 @@ def main():
 
             plt.xlabel(r"$r / r_0$")
             plt.ylabel(qoi.label)
+            pdf.savefig()
             plt.gca().legend()
             pdf.savefig()
 
